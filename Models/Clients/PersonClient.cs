@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RevenueRecognitionSystem.Models;
+namespace RevenueRecognitionSystem.Models.Clients;
 
 [Table("Person")]
-public class Person
+public class PersonClient
 {
     [Key]
     [Column("PESEL")]
@@ -30,4 +30,7 @@ public class Person
     [Column("PhoneNumber")]
     [MaxLength(9)]
     public string PhoneNumber { get; set; }
+
+    [Column("IsDeleted")] 
+    public bool IsDeleted { get; set; }
 }

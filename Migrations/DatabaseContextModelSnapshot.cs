@@ -21,7 +21,77 @@ namespace RevenueRecognitionSystem.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("RevenueRecognitionSystem.Models.Company", b =>
+            modelBuilder.Entity("RevenueRecognitionSystem.Models.Clients.PersonClient", b =>
+                {
+                    b.Property<string>("PESEL")
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)")
+                        .HasColumnName("PESEL");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("Address");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Email");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("FirstName");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("LastName");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)")
+                        .HasColumnName("PhoneNumber");
+
+                    b.HasKey("PESEL");
+
+                    b.ToTable("Person");
+
+                    b.HasData(
+                        new
+                        {
+                            PESEL = "12345678901",
+                            Address = "Koszykowa 86, 02-008 Warsaw",
+                            Email = "john.doe@gmail.com",
+                            FirstName = "John",
+                            IsDeleted = false,
+                            LastName = "Doe",
+                            PhoneNumber = "123456789"
+                        },
+                        new
+                        {
+                            PESEL = "01987654321",
+                            Address = "plac Politechniki 1, 00-661 Warsaw",
+                            Email = "jane.doe@gmail.com",
+                            FirstName = "Jane",
+                            IsDeleted = false,
+                            LastName = "Doe",
+                            PhoneNumber = "987654321"
+                        });
+                });
+
+            modelBuilder.Entity("RevenueRecognitionSystem.Models.CompanyClient", b =>
                 {
                     b.Property<string>("KRS")
                         .HasMaxLength(14)
@@ -71,68 +141,6 @@ namespace RevenueRecognitionSystem.Migrations
                             Address = "al. Jana Pawła II 19, 00-854 Warsaw",
                             Email = "contact@financecompany.com",
                             Name = "Finance Company",
-                            PhoneNumber = "987654321"
-                        });
-                });
-
-            modelBuilder.Entity("RevenueRecognitionSystem.Models.Person", b =>
-                {
-                    b.Property<string>("PESEL")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)")
-                        .HasColumnName("PESEL");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("Address");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("Email");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("FirstName");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("LastName");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(9)
-                        .HasColumnType("nvarchar(9)")
-                        .HasColumnName("PhoneNumber");
-
-                    b.HasKey("PESEL");
-
-                    b.ToTable("Person");
-
-                    b.HasData(
-                        new
-                        {
-                            PESEL = "12345678901",
-                            Address = "Koszykowa 86, 02-008 Warsaw",
-                            Email = "john.doe@gmail.com",
-                            FirstName = "John",
-                            LastName = "Doe",
-                            PhoneNumber = "123456789"
-                        },
-                        new
-                        {
-                            PESEL = "01987654321",
-                            Address = "plac Politechniki 1, 00-661 Warsaw",
-                            Email = "jane.doe@gmail.com",
-                            FirstName = "Jane",
-                            LastName = "Doe",
                             PhoneNumber = "987654321"
                         });
                 });

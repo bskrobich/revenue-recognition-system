@@ -1,12 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using RevenueRecognitionSystem.Models;
+using RevenueRecognitionSystem.Models.Clients;
 
 namespace RevenueRecognitionSystem.Contexts;
 
 public class DatabaseContext : DbContext
 {
-    public DbSet<Person> People { get; set; }
-    public DbSet<Company> Companies { get; set; }
+    public DbSet<PersonClient> People { get; set; }
+    public DbSet<CompanyClient> Companies { get; set; }
     
     protected DatabaseContext()
     {
@@ -21,11 +22,20 @@ public class DatabaseContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        
+        modelBuilder.Entity<PersonClient>()
+            .HasQueryFilter(p => !p.IsDeleted);
+        
+        modelBuilder.Entity<PersonClient>()
+            .Property(p => p.IsDeleted)
+            .HasColumnName("IsDeleted")
+            .HasColumnType("bit")
+            .HasDefaultValue(false);
 
-        modelBuilder.Entity<Person>().HasData(
-            new List<Person>
+        modelBuilder.Entity<PersonClient>().HasData(
+            new List<PersonClient>
             {
-                new Person
+                new PersonClient
                 {
                     PESEL = "12345678901",
                     FirstName = "John",
@@ -34,7 +44,7 @@ public class DatabaseContext : DbContext
                     Email = "john.doe@gmail.com",
                     PhoneNumber = "123456789"
                 },
-                new Person
+                new PersonClient
                 {
                     PESEL = "01987654321",
                     FirstName = "Jane",
@@ -46,10 +56,10 @@ public class DatabaseContext : DbContext
             }
         );
 
-        modelBuilder.Entity<Company>().HasData(
-            new List<Company>
+        modelBuilder.Entity<CompanyClient>().HasData(
+            new List<CompanyClient>
             {
-                new Company
+                new CompanyClient
                 {
                     KRS = "000123456789",
                     Name = "Tech Company",
@@ -57,7 +67,7 @@ public class DatabaseContext : DbContext
                     Email = "contact@techcompany.com",
                     PhoneNumber = "123456789"
                 },
-                new Company
+                new CompanyClient
                 {
                     KRS = "000987654321",
                     Name = "Finance Company",
