@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RevenueRecognitionSystem.Contexts;
+using RevenueRecognitionSystem.Services.ClientServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IPersonClientService, PersonClientService>();
 builder.Services.AddDbContext<DatabaseContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 

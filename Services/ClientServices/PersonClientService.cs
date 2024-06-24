@@ -1,4 +1,5 @@
 using RevenueRecognitionSystem.Contexts;
+using RevenueRecognitionSystem.CustomExceptions;
 using RevenueRecognitionSystem.Models;
 using RevenueRecognitionSystem.RequestModels;
 
@@ -30,9 +31,22 @@ public class PersonClientService(DatabaseContext dbContext) : IPersonClientServi
         await dbContext.SaveChangesAsync();
     }
 
-    public Task UpdatePersonClient(UpdatePersonClientRequestModel request, string PESEL)
+    public async Task UpdatePersonClient(UpdatePersonClientRequestModel request, string PESEL)
     {
-        throw new NotImplementedException();
+        var existingPersonClient = await dbContext.People.FindAsync(PESEL);
+        if (existingPersonClient is null)
+        {
+            throw new ClientNotFoundException($"Client with PESEL: {PESEL} does not exist.");
+        }
+
+        existingPersonClient.FirstName = request.FirstName;
+        existingPersonClient.LastName = request.LastName;
+        existingPersonClient.Address = request.Address;
+        existingPersonClient.Email = request.Email;
+        existingPersonClient.PhoneNumber = request.PhoneNumber;
+
+        dbContext.People.Update(existingPersonClient);
+        await dbContext.SaveChangesAsync();
     }
 
     public Task DeletePersonClient()
