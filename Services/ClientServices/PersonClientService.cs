@@ -11,7 +11,6 @@ public interface IPersonClientService
     Task AddPersonClient(AddPersonClientRequestModel request);
     Task UpdatePersonClient(UpdatePersonClientRequestModel request, string PESEL);
     Task DeletePersonClient(string PESEL);
-
 }
 
 public class PersonClientService(DatabaseContext dbContext) : IPersonClientService
