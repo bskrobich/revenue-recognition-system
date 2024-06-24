@@ -1,6 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using RevenueRecognitionSystem.Contexts;
 using RevenueRecognitionSystem.CustomExceptions;
-using RevenueRecognitionSystem.Models;
+using RevenueRecognitionSystem.Models.Clients;
 using RevenueRecognitionSystem.RequestModels;
 
 namespace RevenueRecognitionSystem.Services.ClientServices;
@@ -9,7 +10,7 @@ public interface IPersonClientService
 {
     Task AddPersonClient(AddPersonClientRequestModel request);
     Task UpdatePersonClient(UpdatePersonClientRequestModel request, string PESEL);
-    Task DeletePersonClient();
+    Task DeletePersonClient(string PESEL);
 
 }
 
@@ -33,7 +34,8 @@ public class PersonClientService(DatabaseContext dbContext) : IPersonClientServi
 
     public async Task UpdatePersonClient(UpdatePersonClientRequestModel request, string PESEL)
     {
-        var existingPersonClient = await dbContext.People.FindAsync(PESEL);
+        var existingPersonClient = await dbContext.People
+            .FirstOrDefaultAsync(p => p.PESEL == PESEL);
         if (existingPersonClient is null)
         {
             throw new ClientNotFoundException($"Client with PESEL: {PESEL} does not exist.");
@@ -49,8 +51,15 @@ public class PersonClientService(DatabaseContext dbContext) : IPersonClientServi
         await dbContext.SaveChangesAsync();
     }
 
-    public Task DeletePersonClient()
+    public async Task DeletePersonClient(string PESEL)
     {
-        throw new NotImplementedException();
+        var existingPersonClient = await dbContext.People
+            .FirstOrDefaultAsync(p => p.PESEL == PESEL);
+        if (existingPersonClient is null)
+        {
+            throw new ClientNotFoundException($"Client with PESEL: {PESEL} does not exist.");
+        }
+        existingPersonClient.IsDeleted = true;
+        await dbContext.SaveChangesAsync();
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RevenueRecognitionSystem.Models;
+using RevenueRecognitionSystem.Models.Clients;
 
 namespace RevenueRecognitionSystem.Contexts;
 
@@ -21,6 +22,15 @@ public class DatabaseContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        
+        modelBuilder.Entity<PersonClient>()
+            .HasQueryFilter(p => !p.IsDeleted);
+        
+        modelBuilder.Entity<PersonClient>()
+            .Property(p => p.IsDeleted)
+            .HasColumnName("IsDeleted")
+            .HasColumnType("bit")
+            .HasDefaultValue(false);
 
         modelBuilder.Entity<PersonClient>().HasData(
             new List<PersonClient>
