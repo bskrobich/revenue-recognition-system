@@ -4,7 +4,7 @@ using RevenueRecognitionSystem.RequestModels;
 
 namespace RevenueRecognitionSystem.Services.ClientServices;
 
-public interface IPersonService
+public interface IPersonClientService
 {
     Task AddPersonClient(AddPersonClientRequestModel request);
     Task UpdatePersonClient(UpdatePersonClientRequestModel request, string PESEL);
@@ -12,11 +12,11 @@ public interface IPersonService
 
 }
 
-public class PersonService(DatabaseContext dbContext) : IPersonService
+public class PersonClientService(DatabaseContext dbContext) : IPersonClientService
 {
     public async Task AddPersonClient(AddPersonClientRequestModel request)
     {
-        var personClient = new Person
+        var personClient = new PersonClient
         {
             PESEL = request.PESEL,
             FirstName = request.FirstName,

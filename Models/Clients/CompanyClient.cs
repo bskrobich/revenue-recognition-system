@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace RevenueRecognitionSystem.Models;
 
 [Table("Company")]
-public class Company
+public class CompanyClient
 {
     [Key]
     [Column("KRS")]
