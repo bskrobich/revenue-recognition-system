@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RevenueRecognitionSystem.Contexts;
 using RevenueRecognitionSystem.CustomExceptions;
-using RevenueRecognitionSystem.Models;
+using RevenueRecognitionSystem.Models.Clients;
 using RevenueRecognitionSystem.RequestModels;
 
 namespace RevenueRecognitionSystem.Services.ClientServices;
