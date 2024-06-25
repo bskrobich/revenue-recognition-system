@@ -6,7 +6,7 @@ using RevenueRecognitionSystem.Services.ClientServices;
 namespace RevenueRecognitionSystem.Controllers.ClientControllers;
 
 [ApiController]
-[Route("company-client")]
+[Route("api/company-client")]
 public class CompanyClientController(ICompanyClientService clientService) : ControllerBase
 {
     [HttpPost("add-company")]
