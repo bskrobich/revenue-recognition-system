@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RevenueRecognitionSystem.Models;
+namespace RevenueRecognitionSystem.Models.Clients;
 
 [Table("Company")]
 public class CompanyClient
