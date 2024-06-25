@@ -13,6 +13,7 @@ public class DatabaseContext : DbContext
     public DbSet<SoftwareVersion> Versions { get; set; }
     public DbSet<Discount> Discounts { get; set; }
     public DbSet<Contract> Contracts { get; set; }
+    public DbSet<Payment> Payments { get; set; }
     
     protected DatabaseContext()
     {

@@ -31,5 +31,7 @@ public class CompanyClient
     public string KRS { get; set; }
 
     private IEnumerable<Contract> Contracts { get; set; }
+    
+    public IEnumerable<Payment> Payments { get; set; }
 }
     

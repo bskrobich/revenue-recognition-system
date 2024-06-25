@@ -47,4 +47,6 @@ public class Contract
     public PersonClient? PersonClient { get; set; }
     
     public CompanyClient? CompanyClient { get; set; }
+    
+    public IEnumerable<Payment> Payments { get; set; }
 }
