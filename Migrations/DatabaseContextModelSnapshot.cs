@@ -23,10 +23,12 @@ namespace RevenueRecognitionSystem.Migrations
 
             modelBuilder.Entity("RevenueRecognitionSystem.Models.Clients.PersonClient", b =>
                 {
-                    b.Property<string>("PESEL")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)")
-                        .HasColumnName("PESEL");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -58,45 +60,55 @@ namespace RevenueRecognitionSystem.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("LastName");
 
+                    b.Property<string>("PESEL")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)")
+                        .HasColumnName("PESEL");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(9)
                         .HasColumnType("nvarchar(9)")
                         .HasColumnName("PhoneNumber");
 
-                    b.HasKey("PESEL");
+                    b.HasKey("Id");
 
                     b.ToTable("Person");
 
                     b.HasData(
                         new
                         {
-                            PESEL = "12345678901",
+                            Id = 1,
                             Address = "Koszykowa 86, 02-008 Warsaw",
                             Email = "john.doe@gmail.com",
                             FirstName = "John",
                             IsDeleted = false,
                             LastName = "Doe",
+                            PESEL = "12345678901",
                             PhoneNumber = "123456789"
                         },
                         new
                         {
-                            PESEL = "01987654321",
+                            Id = 2,
                             Address = "plac Politechniki 1, 00-661 Warsaw",
                             Email = "jane.doe@gmail.com",
                             FirstName = "Jane",
                             IsDeleted = false,
                             LastName = "Doe",
+                            PESEL = "01987654321",
                             PhoneNumber = "987654321"
                         });
                 });
 
             modelBuilder.Entity("RevenueRecognitionSystem.Models.CompanyClient", b =>
                 {
-                    b.Property<string>("KRS")
-                        .HasMaxLength(14)
-                        .HasColumnType("nvarchar(14)")
-                        .HasColumnName("KRS");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -110,6 +122,12 @@ namespace RevenueRecognitionSystem.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("Email");
 
+                    b.Property<string>("KRS")
+                        .IsRequired()
+                        .HasMaxLength(14)
+                        .HasColumnType("nvarchar(14)")
+                        .HasColumnName("KRS");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -122,24 +140,26 @@ namespace RevenueRecognitionSystem.Migrations
                         .HasColumnType("nvarchar(9)")
                         .HasColumnName("PhoneNumber");
 
-                    b.HasKey("KRS");
+                    b.HasKey("Id");
 
                     b.ToTable("Company");
 
                     b.HasData(
                         new
                         {
-                            KRS = "000123456789",
+                            Id = 1,
                             Address = "rondo Daszyńskiego 2, 00-843 Warsaw",
                             Email = "contact@techcompany.com",
+                            KRS = "000123456789",
                             Name = "Tech Company",
                             PhoneNumber = "123456789"
                         },
                         new
                         {
-                            KRS = "000987654321",
+                            Id = 2,
                             Address = "al. Jana Pawła II 19, 00-854 Warsaw",
                             Email = "contact@financecompany.com",
+                            KRS = "000987654321",
                             Name = "Finance Company",
                             PhoneNumber = "987654321"
                         });

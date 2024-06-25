@@ -7,9 +7,8 @@ namespace RevenueRecognitionSystem.Models.Clients;
 public class PersonClient
 {
     [Key]
-    [Column("PESEL")]
-    [MaxLength(11)]
-    public string PESEL { get; set; }
+    [Column("Id")]
+    public int Id { get; set; }
     
     [Column("FirstName")]
     [MaxLength(50)]
@@ -30,6 +29,10 @@ public class PersonClient
     [Column("PhoneNumber")]
     [MaxLength(9)]
     public string PhoneNumber { get; set; }
+    
+    [Column("PESEL")]
+    [MaxLength(11)]
+    public string PESEL { get; set; }
 
     [Column("IsDeleted")] 
     public bool IsDeleted { get; set; }

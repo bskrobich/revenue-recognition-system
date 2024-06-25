@@ -7,9 +7,8 @@ namespace RevenueRecognitionSystem.Models;
 public class CompanyClient
 {
     [Key]
-    [Column("KRS")]
-    [MaxLength(14)]
-    public string KRS { get; set; }
+    [Column("Id")]
+    public int Id { get; set; }
     
     [Column("Name")]
     [MaxLength(100)]
@@ -26,5 +25,9 @@ public class CompanyClient
     [Column("PhoneNumber")]
     [MaxLength(9)]
     public string PhoneNumber { get; set; }
+    
+    [Column("KRS")]
+    [MaxLength(14)]
+    public string KRS { get; set; }
 }
     

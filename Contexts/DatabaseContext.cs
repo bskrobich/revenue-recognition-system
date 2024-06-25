@@ -37,6 +37,7 @@ public class DatabaseContext : DbContext
             {
                 new PersonClient
                 {
+                    Id = 1,
                     PESEL = "12345678901",
                     FirstName = "John",
                     LastName = "Doe",
@@ -46,6 +47,7 @@ public class DatabaseContext : DbContext
                 },
                 new PersonClient
                 {
+                    Id = 2,
                     PESEL = "01987654321",
                     FirstName = "Jane",
                     LastName = "Doe",
@@ -61,6 +63,7 @@ public class DatabaseContext : DbContext
             {
                 new CompanyClient
                 {
+                    Id = 1,
                     KRS = "000123456789",
                     Name = "Tech Company",
                     Address = "rondo Daszyńskiego 2, 00-843 Warsaw",
@@ -69,6 +72,7 @@ public class DatabaseContext : DbContext
                 },
                 new CompanyClient
                 {
+                    Id = 2,
                     KRS = "000987654321",
                     Name = "Finance Company",
                     Address = "al. Jana Pawła II 19, 00-854 Warsaw",
