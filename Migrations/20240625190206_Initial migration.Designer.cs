@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RevenueRecognitionSystem.Contexts;
 
@@ -11,9 +12,11 @@ using RevenueRecognitionSystem.Contexts;
 namespace RevenueRecognitionSystem.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240625190206_Initial migration")]
+    partial class Initialmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -279,42 +282,6 @@ namespace RevenueRecognitionSystem.Migrations
                     b.ToTable("Contract");
                 });
 
-            modelBuilder.Entity("RevenueRecognitionSystem.Models.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CompanyClientId")
-                        .HasColumnType("int")
-                        .HasColumnName("CompanyClientId");
-
-                    b.Property<int>("ContractId")
-                        .HasColumnType("int")
-                        .HasColumnName("ContractId");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("PaymentDate");
-
-                    b.Property<int?>("PersonClientId")
-                        .HasColumnType("int")
-                        .HasColumnName("PersonClientId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyClientId");
-
-                    b.HasIndex("ContractId");
-
-                    b.HasIndex("PersonClientId");
-
-                    b.ToTable("Payment");
-                });
-
             modelBuilder.Entity("RevenueRecognitionSystem.Models.Software.Software", b =>
                 {
                     b.Property<int>("Id")
@@ -447,29 +414,6 @@ namespace RevenueRecognitionSystem.Migrations
                     b.Navigation("SoftwareVersion");
                 });
 
-            modelBuilder.Entity("RevenueRecognitionSystem.Models.Payment", b =>
-                {
-                    b.HasOne("RevenueRecognitionSystem.Models.Clients.CompanyClient", "CompanyClient")
-                        .WithMany("Payments")
-                        .HasForeignKey("CompanyClientId");
-
-                    b.HasOne("RevenueRecognitionSystem.Models.Contract", "Contract")
-                        .WithMany("Payments")
-                        .HasForeignKey("ContractId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RevenueRecognitionSystem.Models.Clients.PersonClient", "PersonClient")
-                        .WithMany("Payments")
-                        .HasForeignKey("PersonClientId");
-
-                    b.Navigation("CompanyClient");
-
-                    b.Navigation("Contract");
-
-                    b.Navigation("PersonClient");
-                });
-
             modelBuilder.Entity("RevenueRecognitionSystem.Models.Software.SoftwareVersion", b =>
                 {
                     b.HasOne("RevenueRecognitionSystem.Models.Software.Software", "Software")
@@ -479,21 +423,6 @@ namespace RevenueRecognitionSystem.Migrations
                         .IsRequired();
 
                     b.Navigation("Software");
-                });
-
-            modelBuilder.Entity("RevenueRecognitionSystem.Models.Clients.CompanyClient", b =>
-                {
-                    b.Navigation("Payments");
-                });
-
-            modelBuilder.Entity("RevenueRecognitionSystem.Models.Clients.PersonClient", b =>
-                {
-                    b.Navigation("Payments");
-                });
-
-            modelBuilder.Entity("RevenueRecognitionSystem.Models.Contract", b =>
-                {
-                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("RevenueRecognitionSystem.Models.Software.Software", b =>

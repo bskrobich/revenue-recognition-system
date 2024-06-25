@@ -29,5 +29,9 @@ public class CompanyClient
     [Column("KRS")]
     [MaxLength(14)]
     public string KRS { get; set; }
+
+    private IEnumerable<Contract> Contracts { get; set; }
+    
+    public IEnumerable<Payment> Payments { get; set; }
 }
     
