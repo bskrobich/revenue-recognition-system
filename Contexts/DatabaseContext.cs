@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using RevenueRecognitionSystem.Models;
 using RevenueRecognitionSystem.Models.Clients;
 using RevenueRecognitionSystem.Models.Software;
 
@@ -11,6 +12,7 @@ public class DatabaseContext : DbContext
     public DbSet<Software> Software { get; set; }
     public DbSet<SoftwareVersion> Versions { get; set; }
     public DbSet<Discount> Discounts { get; set; }
+    public DbSet<Contract> Contracts { get; set; }
     
     protected DatabaseContext()
     {

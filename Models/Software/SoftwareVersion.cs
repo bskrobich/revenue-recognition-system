@@ -16,6 +16,8 @@ public class SoftwareVersion
     [ForeignKey("Software")]
     [Column("SoftwareId")]
     public int SoftwareId { get; set; }
-    
+
     public Software Software { get; set; }
+    
+    public IEnumerable<Contract> Contracts { get; set; }
 }

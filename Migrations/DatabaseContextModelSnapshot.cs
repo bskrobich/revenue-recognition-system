@@ -223,6 +223,62 @@ namespace RevenueRecognitionSystem.Migrations
                         });
                 });
 
+            modelBuilder.Entity("RevenueRecognitionSystem.Models.Contract", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CompanyClientId")
+                        .HasColumnType("int")
+                        .HasColumnName("CompanyClientId");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("EndDate");
+
+                    b.Property<decimal>("FinalPrice")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("FinalPrice");
+
+                    b.Property<bool>("IsSigned")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsSigned");
+
+                    b.Property<decimal>("PaidAmount")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("PaidAmount");
+
+                    b.Property<int?>("PersonClientId")
+                        .HasColumnType("int")
+                        .HasColumnName("PersonClientId");
+
+                    b.Property<int>("SoftwareVersionId")
+                        .HasColumnType("int")
+                        .HasColumnName("SoftwareVersionId");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("StartDate");
+
+                    b.Property<int>("UpdateYears")
+                        .HasColumnType("int")
+                        .HasColumnName("UpdateYears");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyClientId");
+
+                    b.HasIndex("PersonClientId");
+
+                    b.HasIndex("SoftwareVersionId");
+
+                    b.ToTable("Contract");
+                });
+
             modelBuilder.Entity("RevenueRecognitionSystem.Models.Software.Software", b =>
                 {
                     b.Property<int>("Id")
@@ -332,6 +388,29 @@ namespace RevenueRecognitionSystem.Migrations
                     b.Navigation("Software");
                 });
 
+            modelBuilder.Entity("RevenueRecognitionSystem.Models.Contract", b =>
+                {
+                    b.HasOne("RevenueRecognitionSystem.Models.Clients.CompanyClient", "CompanyClient")
+                        .WithMany()
+                        .HasForeignKey("CompanyClientId");
+
+                    b.HasOne("RevenueRecognitionSystem.Models.Clients.PersonClient", "PersonClient")
+                        .WithMany()
+                        .HasForeignKey("PersonClientId");
+
+                    b.HasOne("RevenueRecognitionSystem.Models.Software.SoftwareVersion", "SoftwareVersion")
+                        .WithMany("Contracts")
+                        .HasForeignKey("SoftwareVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CompanyClient");
+
+                    b.Navigation("PersonClient");
+
+                    b.Navigation("SoftwareVersion");
+                });
+
             modelBuilder.Entity("RevenueRecognitionSystem.Models.Software.SoftwareVersion", b =>
                 {
                     b.HasOne("RevenueRecognitionSystem.Models.Software.Software", "Software")
@@ -348,6 +427,11 @@ namespace RevenueRecognitionSystem.Migrations
                     b.Navigation("Discounts");
 
                     b.Navigation("Versions");
+                });
+
+            modelBuilder.Entity("RevenueRecognitionSystem.Models.Software.SoftwareVersion", b =>
+                {
+                    b.Navigation("Contracts");
                 });
 #pragma warning restore 612, 618
         }

@@ -23,5 +23,6 @@ public class Software
     public string Category { get; set; }
     
     public IEnumerable<SoftwareVersion> Versions { get; set; }
+    
     public IEnumerable<Discount> Discounts { get; set; }
 }
