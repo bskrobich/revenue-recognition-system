@@ -11,7 +11,7 @@ public class AddPersonClientRequestModel
     public string PESEL { get; set; }
     
     [Required(ErrorMessage = "First name is required.")]
-    [StringLength(100, ErrorMessage = "First name cannot be longer than 100 characters.")]
+    [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]
     public string FirstName { get; set; }
     
     [Required(ErrorMessage = "Last name is required.")]
@@ -19,7 +19,7 @@ public class AddPersonClientRequestModel
     public string LastName { get; set; }
     
     [Required(ErrorMessage = "Address is required.")]
-    [StringLength(100, ErrorMessage = "Address cannot be longer than 100 characters.")]
+    [StringLength(200, ErrorMessage = "Address cannot be longer than 200 characters.")]
     public string Address { get; set; }
     
     [Required(ErrorMessage = "Email is required.")]
