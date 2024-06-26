@@ -16,17 +16,18 @@ public class PaymentService(DatabaseContext dbContext) : IPaymentService
     public async Task PayContractById(PaymentRequestModel model, int id)
     {
         var existingContract = await dbContext.Contracts
-            .FirstOrDefaultAsync(c => c.Id == model.ContractId && c.IsSigned == false
+            .FirstOrDefaultAsync(c => c.Id == id && c.IsSigned == false
             );
         if (existingContract is null)
         {
-            throw new ContractNotFoundException($"Contract with Id: {model.ContractId} does not exist or is already paid.");
+            throw new ContractNotFoundException($"Contract with Id: {id} does not exist or is already paid.");
         }
 
         if (existingContract.EndDate < model.PaymentDate)
         {
             existingContract.PaidAmount = 0;
             dbContext.Contracts.Update(existingContract);
+            await dbContext.SaveChangesAsync();
             throw new PaymentException($"Payment deadline for Contract Id: {id} has been exceeded.");
         }
 
@@ -51,11 +52,15 @@ public class PaymentService(DatabaseContext dbContext) : IPaymentService
             var newPayment = new Payment
             {
                 PersonClientId = model.PersonClientId,
-                ContractId = model.ContractId,
+                ContractId = id,
                 Amount = model.Amount
             };
             
             existingContract.PaidAmount += model.Amount;
+            if (existingContract.PaidAmount > existingContract.FinalPrice)
+            {
+                existingContract.PaidAmount = existingContract.FinalPrice;
+            }
             if (existingContract.PaidAmount == existingContract.FinalPrice)
             {
                 existingContract.IsSigned = true;
@@ -86,7 +91,7 @@ public class PaymentService(DatabaseContext dbContext) : IPaymentService
             var newPayment = new Payment
             {
                 CompanyClientId = model.CompanyClientId,
-                ContractId = model.ContractId,
+                ContractId = id,
                 Amount = model.Amount
             };
             

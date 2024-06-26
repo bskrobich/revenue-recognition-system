@@ -8,11 +8,8 @@ public class PaymentRequestModel
     [RequiredIf(nameof(CompanyClientId), null, ErrorMessage = "Either PersonClientId or CompanyClientId must be provided.")]
     public int? PersonClientId { get; set; }
     
-    [RequiredIf(nameof(CompanyClientId), null, ErrorMessage = "Either PersonClientId or CompanyClientId must be provided.")]
+    [RequiredIf(nameof(PersonClientId), null, ErrorMessage = "Either PersonClientId or CompanyClientId must be provided.")]
     public int? CompanyClientId { get; set; }
-    
-    [Required(ErrorMessage = "Contract ID is required.")]
-    public int ContractId { get; set; }
     
     [Required(ErrorMessage = "Amount is required.")]
     [Range(0, double.MaxValue, ErrorMessage = "Amount must be a positive value.")]
