@@ -9,6 +9,8 @@ public interface IRevenueService
     public Task<string> CalculateRevenue();
     public Task<string> CalculateRevenueForProduct(int productId);
     public Task<string> CalculateRevenueByCurrency(string targetCurrency);
+    public Task<string> CalculatePredictedRevenue();
+    public Task<string> CalculatePredictedRevenueForProduct(int productId);
 
 }
 public class RevenueService(DatabaseContext dbContext, ICurrencyConverterService currencyService) : IRevenueService
@@ -20,6 +22,14 @@ public class RevenueService(DatabaseContext dbContext, ICurrencyConverterService
             .SumAsync(c => c.PaidAmount);
         
         return $"Calculated revenue = {revenue} PLN";
+    }
+    
+    public async Task<string> CalculatePredictedRevenue()
+    {
+        var revenue = await dbContext.Contracts
+            .SumAsync(c => c.FinalPrice);
+        
+        return $"Predicted revenue = {revenue} PLN";
     }
 
     public async Task<string> CalculateRevenueForProduct(int productId)
@@ -39,6 +49,22 @@ public class RevenueService(DatabaseContext dbContext, ICurrencyConverterService
             .SumAsync(c => c.PaidAmount);
 
         return $"Calculated revenue for {existingProduct.Name} = {productRevenue} PLN";
+    }
+    
+    public async Task<string> CalculatePredictedRevenueForProduct(int productId)
+    {
+        var existingProduct = await dbContext.Software
+            .FirstOrDefaultAsync(s => s.Id == productId);
+        if (existingProduct is null)
+        {
+            throw new SoftwareNotFoundException($"Product with Id: {productId} does not exist.");
+        }
+
+        var productRevenue = await dbContext.Contracts
+            .Where(c => c.SoftwareVersion.SoftwareId == productId)
+            .SumAsync(c => c.FinalPrice);
+
+        return $"Predicted revenue for {existingProduct.Name} = {productRevenue} PLN";
     }
     
     public async Task<string> CalculateRevenueByCurrency(string targetCurrency)
