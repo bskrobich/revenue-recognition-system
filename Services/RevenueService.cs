@@ -8,17 +8,18 @@ public interface IRevenueService
 {
     public Task<string> CalculateRevenue();
     public Task<string> CalculateRevenueForProduct(int productId);
+    public Task<string> CalculateRevenueByCurrency(string targetCurrency);
 
 }
-public class RevenueService(DatabaseContext dbContext) : IRevenueService
+public class RevenueService(DatabaseContext dbContext, ICurrencyConverterService currencyService) : IRevenueService
 {
     public async Task<string> CalculateRevenue()
     {
-        var currentRevenue = await dbContext.Contracts
+        var revenue = await dbContext.Contracts
             .Where(c => c.IsSigned && c.PaidAmount == c.FinalPrice)
             .SumAsync(c => c.PaidAmount);
-
-        return $"Calculated revenue = {currentRevenue} PLN";
+        
+        return $"Calculated revenue = {revenue} PLN";
     }
 
     public async Task<string> CalculateRevenueForProduct(int productId)
@@ -38,5 +39,20 @@ public class RevenueService(DatabaseContext dbContext) : IRevenueService
             .SumAsync(c => c.PaidAmount);
 
         return $"Calculated revenue for {existingProduct.Name} = {productRevenue} PLN";
+    }
+    
+    public async Task<string> CalculateRevenueByCurrency(string targetCurrency)
+    {
+        var revenue = await dbContext.Contracts
+            .Where(c => c.IsSigned && c.PaidAmount == c.FinalPrice)
+            .SumAsync(c => c.PaidAmount);
+
+        if (string.Equals(targetCurrency, "PLN", StringComparison.OrdinalIgnoreCase))
+        {
+            return $"Calculated revenue = {revenue} PLN";
+        }
+
+        var exchangeRate = await currencyService.GetExchangeRate(targetCurrency);
+        return $"Calculated revenue = {Math.Round(revenue * exchangeRate, 2)} {targetCurrency}";
     }
 }
