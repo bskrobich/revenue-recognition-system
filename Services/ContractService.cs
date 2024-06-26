@@ -25,7 +25,9 @@ public class ContractService(DatabaseContext dbContext) : IContractService
         }
         
         var existingSoftwareVersion = await dbContext.Versions
-            .FirstOrDefaultAsync(s => s.Id == model.SoftwareVersionId);
+            .FirstOrDefaultAsync(
+                s => s.Id == model.SoftwareVersionId && s.SoftwareId == model.SoftwareId
+            );
         if (existingSoftwareVersion is null)
         {
             throw new SoftwareNotFoundException(
