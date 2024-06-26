@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RevenueRecognitionSystem.Contexts;
+using RevenueRecognitionSystem.Services;
 using RevenueRecognitionSystem.Services.ClientServices;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddScoped<IPersonClientService, PersonClientService>();
 builder.Services.AddScoped<ICompanyClientService, CompanyClientService>();
+builder.Services.AddScoped<IContractService, ContractService>();
 builder.Services.AddDbContext<DatabaseContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
