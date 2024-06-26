@@ -53,14 +53,14 @@ public class ContractService(DatabaseContext dbContext) : IContractService
 
             var finalPrice = model.Price;
             
-            if (highestDiscount is not null)
-            {
-                finalPrice -= finalPrice * (highestDiscount.PercentageValue / 100);
-            }
-            
             if (model.UpdateYears > 1)
             {
                 finalPrice += (model.UpdateYears - 1) * 1000;
+            }
+            
+            if (highestDiscount is not null)
+            {
+                finalPrice -= finalPrice * (highestDiscount.PercentageValue / 100);
             }
 
             var returningClient = await dbContext.Contracts
@@ -100,14 +100,14 @@ public class ContractService(DatabaseContext dbContext) : IContractService
 
             var finalPrice = model.Price;
             
-            if (highestDiscount is not null)
-            {
-                finalPrice -= finalPrice * (highestDiscount.PercentageValue / 100);
-            }
-            
             if (model.UpdateYears > 1)
             {
                 finalPrice += (model.UpdateYears - 1) * 1000;
+            }
+            
+            if (highestDiscount is not null)
+            {
+                finalPrice -= finalPrice * (highestDiscount.PercentageValue / 100);
             }
 
             var returningClient = await dbContext.Contracts
