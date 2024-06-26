@@ -23,6 +23,9 @@ public class Payment
     [Column("ContractId")]
     public int ContractId { get; set; }
     
+    [Column("Amount")]
+    public decimal Amount { get; set; }
+    
     [Column("PaymentDate")]
     public DateTime PaymentDate { get; set; }
     

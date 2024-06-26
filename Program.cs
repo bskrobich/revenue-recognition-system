@@ -13,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IPersonClientService, PersonClientService>();
 builder.Services.AddScoped<ICompanyClientService, CompanyClientService>();
 builder.Services.AddScoped<IContractService, ContractService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddDbContext<DatabaseContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
