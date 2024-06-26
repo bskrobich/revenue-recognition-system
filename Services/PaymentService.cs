@@ -96,6 +96,10 @@ public class PaymentService(DatabaseContext dbContext) : IPaymentService
             };
             
             existingContract.PaidAmount += model.Amount;
+            if (existingContract.PaidAmount > existingContract.FinalPrice)
+            {
+                existingContract.PaidAmount = existingContract.FinalPrice;
+            }
             if (existingContract.PaidAmount == existingContract.FinalPrice)
             {
                 existingContract.IsSigned = true;
