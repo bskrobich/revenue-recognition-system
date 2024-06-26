@@ -14,6 +14,7 @@ builder.Services.AddScoped<IPersonClientService, PersonClientService>();
 builder.Services.AddScoped<ICompanyClientService, CompanyClientService>();
 builder.Services.AddScoped<IContractService, ContractService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IRevenueService, RevenueService>();
 builder.Services.AddDbContext<DatabaseContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
