@@ -37,7 +37,10 @@ public class ContractService(DatabaseContext dbContext) : IContractService
         }
         
         var highestDiscount = await dbContext.Discounts
-            .Where(d => d.SoftwareId == model.SoftwareId)
+            .Where(d => d.SoftwareId == model.SoftwareId
+                                && d.StartDate <= model.StartDate
+                                && d.EndDate >= model.StartDate
+                        )
             .OrderByDescending(d => d.PercentageValue)
             .FirstOrDefaultAsync();
 
