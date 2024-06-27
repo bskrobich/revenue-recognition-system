@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RevenueRecognitionSystem.CustomExceptions;
 using RevenueRecognitionSystem.RequestModels;
@@ -6,9 +7,10 @@ using RevenueRecognitionSystem.Services.ClientServices;
 namespace RevenueRecognitionSystem.Controllers.ClientControllers;
 
 [ApiController]
-[Route("api/company-client")]
+[Route("api/company-clients")]
 public class CompanyClientController(ICompanyClientService clientService) : ControllerBase
 {
+    [Authorize]
     [HttpPost("add-company")]
     public async Task<IActionResult> AddNewCompanyClient(AddCompanyClientRequestModel model)
     {
@@ -22,6 +24,7 @@ public class CompanyClientController(ICompanyClientService clientService) : Cont
         return Created();
     }
 
+    [Authorize(Roles = "admin")]
     [HttpPut("update-client/{KRS}")]
     public async Task<IActionResult> UpdateCompanyClient(UpdateCompanyClientRequestModel model, string KRS)
     {

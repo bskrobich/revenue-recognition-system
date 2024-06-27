@@ -12,8 +12,8 @@ using RevenueRecognitionSystem.Contexts;
 namespace RevenueRecognitionSystem.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240626122351_Migration no2")]
-    partial class Migrationno2
+    [Migration("20240627145032_Migration no1")]
+    partial class Migrationno1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -418,6 +418,40 @@ namespace RevenueRecognitionSystem.Migrations
                             SoftwareId = 2,
                             Version = 25.9m
                         });
+                });
+
+            modelBuilder.Entity("RevenueRecognitionSystem.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Login");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Password");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Role");
+
+                    b.Property<string>("Salt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Salt");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Discount", b =>
