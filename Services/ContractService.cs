@@ -9,6 +9,7 @@ namespace RevenueRecognitionSystem.Services;
 public interface IContractService
 {
     Task CreateNewContract(CreateContractRequestModel model);
+    Task DeleteContract(int contractId);
 }
 
 public class ContractService(DatabaseContext dbContext) : IContractService
@@ -134,6 +135,19 @@ public class ContractService(DatabaseContext dbContext) : IContractService
             await dbContext.Contracts.AddAsync(newContract);
         }
 
+        await dbContext.SaveChangesAsync();
+    }
+
+    public async Task DeleteContract(int contractId)
+    {
+        var existingContract = await dbContext.Contracts
+            .FirstOrDefaultAsync(c => c.Id == contractId);
+        if (existingContract is null)
+        {
+            throw new ContractNotFoundException($"Contract with Id: {contractId} was not found.");
+        }
+
+        dbContext.Contracts.Remove(existingContract);
         await dbContext.SaveChangesAsync();
     }
 }

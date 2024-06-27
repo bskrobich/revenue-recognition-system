@@ -36,7 +36,7 @@ public class RevenueController(IRevenueService service) : ControllerBase
         }
     }
     
-    [HttpGet("calculate-predicted-for-product")]
+    [HttpGet("predict-for-product")]
     public async Task<IActionResult> GetPredictedRevenueForProduct([FromQuery] int productId)
     {
         try
