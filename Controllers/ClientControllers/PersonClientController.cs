@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RevenueRecognitionSystem.CustomExceptions;
 using RevenueRecognitionSystem.RequestModels;
@@ -6,9 +7,10 @@ using RevenueRecognitionSystem.Services.ClientServices;
 namespace RevenueRecognitionSystem.Controllers.ClientControllers;
 
 [ApiController]
-[Route("api/person-client")]
+[Route("api/person-clients")]
 public class PersonClientController(IPersonClientService clientService) : ControllerBase
 {
+    [Authorize]
     [HttpPost("add-client")]
     public async Task<IActionResult> AddNewPersonClient(AddPersonClientRequestModel model)
     {
@@ -22,6 +24,7 @@ public class PersonClientController(IPersonClientService clientService) : Contro
         return Created();
     }
 
+    [Authorize(Roles = "admin")]
     [HttpPut("update-client/{PESEL}")]
     public async Task<IActionResult> UpdatePersonClient(UpdatePersonClientRequestModel model, string PESEL)
     {
@@ -47,6 +50,7 @@ public class PersonClientController(IPersonClientService clientService) : Contro
         return Ok();
     }
 
+    [Authorize(Roles = "admin")]
     [HttpDelete("delete-client/{PESEL}")]
     public async Task<IActionResult> DeletePersonClient(string PESEL)
     {

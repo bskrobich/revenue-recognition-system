@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RevenueRecognitionSystem.CustomExceptions;
 using RevenueRecognitionSystem.RequestModels;
@@ -6,9 +7,10 @@ using RevenueRecognitionSystem.Services;
 namespace RevenueRecognitionSystem.Controllers;
 
 [ApiController]
-[Route("api/payment")]
+[Route("api/payments")]
 public class PaymentController(IPaymentService service) : ControllerBase
 {
+    [Authorize]
     [HttpPost("pay-contract-by-id/{id:int}")]
     public async Task<IActionResult> PayContractById(PaymentRequestModel model, int id)
     {

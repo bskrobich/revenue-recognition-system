@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RevenueRecognitionSystem.CustomExceptions;
 using RevenueRecognitionSystem.RequestModels;
@@ -6,10 +7,10 @@ using RevenueRecognitionSystem.Services;
 namespace RevenueRecognitionSystem.Controllers;
 
 [ApiController]
-[Route("api/contract")]
+[Route("api/contracts")]
 public class ContractController(IContractService contractService) : ControllerBase 
 {
-
+    [Authorize]
     [HttpPost("create-contract")]
     public async Task<IActionResult> CreateNewContract(CreateContractRequestModel model)
     {
@@ -34,6 +35,7 @@ public class ContractController(IContractService contractService) : ControllerBa
         return Created();
     }
 
+    [Authorize(Roles = "admin")]
     [HttpDelete("delete-contract/{id:int}")]
     public async Task<IActionResult> DeleteContract(int id)
     {

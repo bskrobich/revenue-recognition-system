@@ -54,7 +54,7 @@ public class UserController(IConfiguration configuration, DatabaseContext dbCont
         var userclaim = new[]
         {
             new Claim(ClaimTypes.Name, user.Login),
-            new Claim(ClaimTypes.Role, user.Role)
+            new Claim(ClaimTypes.Role, user.Role.ToLower())
         };
 
         SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Key"]!));
@@ -75,14 +75,4 @@ public class UserController(IConfiguration configuration, DatabaseContext dbCont
             AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
         });
     }
-    [Authorize(Roles="admin")]
-    [HttpGet("email")]
-    public IActionResult GetEmail()
-    {
-        return Ok($"Good good!!!");
-    }
-    
-
-
-
 }
