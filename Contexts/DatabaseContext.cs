@@ -14,6 +14,7 @@ public class DatabaseContext : DbContext
     public DbSet<Discount> Discounts { get; set; }
     public DbSet<Contract> Contracts { get; set; }
     public DbSet<Payment> Payments { get; set; }
+    public DbSet<User> Users { get; set; }
     
     protected DatabaseContext()
     {
