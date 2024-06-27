@@ -13,7 +13,7 @@ using RevenueRecognitionSystem.ResponseModels;
 namespace RevenueRecognitionSystem.Controllers;
 
 [ApiController]
-[Route("api/authentication")]
+[Route("api/authorization")]
 public class UserController(IConfiguration configuration, DatabaseContext dbContext) : ControllerBase
 {
 
