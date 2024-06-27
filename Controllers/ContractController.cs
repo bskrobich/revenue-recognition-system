@@ -33,5 +33,20 @@ public class ContractController(IContractService contractService) : ControllerBa
 
         return Created();
     }
+
+    [HttpDelete("delete-contract/{id:int}")]
+    public async Task<IActionResult> DeleteContract(int id)
+    {
+        try
+        {
+            await contractService.DeleteContract(id);
+        }
+        catch (ContractNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+
+        return NoContent();
+    }
     
 }
