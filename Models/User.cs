@@ -11,14 +11,14 @@ public class User
     public int Id { get; set; }
     
     [Column("Login")]
-    [MaxLength(50)]
     public string Login { get; set; }
     
     [Column("Password")]
-    [MaxLength(50)]
     public string Password { get; set; }
     
+    [Column("Salt")]
+    public string Salt { get; set; }
+    
     [Column("Role")]
-    [MaxLength(50)]
     public string Role { get; set; }
 }

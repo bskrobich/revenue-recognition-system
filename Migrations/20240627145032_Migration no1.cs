@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RevenueRecognitionSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class Initialmigration : Migration
+    public partial class Migrationno1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,6 +62,22 @@ namespace RevenueRecognitionSystem.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Software", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Login = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Salt = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -144,6 +160,39 @@ namespace RevenueRecognitionSystem.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Payment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonClientId = table.Column<int>(type: "int", nullable: true),
+                    CompanyClientId = table.Column<int>(type: "int", nullable: true),
+                    ContractId = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payment_Company_CompanyClientId",
+                        column: x => x.CompanyClientId,
+                        principalTable: "Company",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Payment_Contract_ContractId",
+                        column: x => x.ContractId,
+                        principalTable: "Contract",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Payment_Person_PersonClientId",
+                        column: x => x.PersonClientId,
+                        principalTable: "Person",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.InsertData(
                 table: "Company",
                 columns: new[] { "Id", "Address", "Email", "KRS", "Name", "PhoneNumber" },
@@ -212,6 +261,21 @@ namespace RevenueRecognitionSystem.Migrations
                 column: "SoftwareId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Payment_CompanyClientId",
+                table: "Payment",
+                column: "CompanyClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payment_ContractId",
+                table: "Payment",
+                column: "ContractId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payment_PersonClientId",
+                table: "Payment",
+                column: "PersonClientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Software_Version_SoftwareId",
                 table: "Software_Version",
                 column: "SoftwareId");
@@ -221,10 +285,16 @@ namespace RevenueRecognitionSystem.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Contract");
+                name: "Discount");
 
             migrationBuilder.DropTable(
-                name: "Discount");
+                name: "Payment");
+
+            migrationBuilder.DropTable(
+                name: "User");
+
+            migrationBuilder.DropTable(
+                name: "Contract");
 
             migrationBuilder.DropTable(
                 name: "Company");
